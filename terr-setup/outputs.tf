@@ -33,9 +33,9 @@ output "secret_key" {
 
 output "service_account_key_json" {
   value     = jsonencode({
-    id                  = yandex_iam_service_account_static_access_key.sa_key.access_key
-    service_account_id  = yandex_iam_service_account_static_access_key.sa_key.service_account_id
-    private_key         = yandex_iam_service_account_static_access_key.sa_key.secret_key
+    id                  = yandex_iam_service_account_static_access_key.terr-sa-static-key.access_key
+    service_account_id  = yandex_iam_service_account_static_access_key.terr-sa-static-key.service_account_id
+    private_key         = yandex_iam_service_account_static_access_key.terr-sa-static-key.secret_key
   })
   sensitive = true
 }
