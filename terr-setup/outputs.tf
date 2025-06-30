@@ -30,3 +30,12 @@ output "secret_key" {
   value     = yandex_iam_service_account_static_access_key.terr-sa-static-key.secret_key
   sensitive = true
 }
+
+locals {
+  service_account_key = jsondecode(var.service_account_key_json)
+}
+
+output "private_key" {
+  value       = local.service_account_key.private_key
+  description = "Private Key from the JSON"
+}
