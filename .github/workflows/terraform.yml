@@ -52,38 +52,19 @@ jobs:
         run: |
           terraform apply -auto-approve
 
-      # Шаг 6: Получение выходных переменных из terr-setup
-      - name: Extract Access Key and Secret Key
-        id: extract-keys
+      # Шаг 5: Получение ключа из terr-setup
+      - name: Extract Service Account Key
+        id: extract-key
         working-directory: terr-setup
         run: |
-          export TF_LOG=
-          ACCESS_KEY=$(terraform output -raw access_key | tr -d '\n\r')
-          SECRET_KEY=$(terraform output -raw secret_key | tr -d '\n\r')
-          echo "ACCESS_KEY=$ACCESS_KEY" >> $GITHUB_ENV
-          echo "SECRET_KEY=$SECRET_KEY" >> $GITHUB_ENV
+          echo "SERVICE_ACCOUNT_KEY_JSON=$(terraform output -raw service_account_key_json)" >> $GITHUB_ENV
 
-      # Шаг 7: Настройка Yandex Cloud CLI
-      - name: Configure Yandex Cloud CLI
-        run: |
-          yc config set access-key "${{ env.ACCESS_KEY }}"
-          yc config set secret-key "${{ env.SECRET_KEY }}"
-          yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
-          yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
-
-      # Шаг: Проверка подключения
-      - name: Test YC CLI Connection
-        run: |
-          yc managed-kubernetes cluster list
-    
-      # Шаг 8: Настройка переменных окружения для terr-infra
+      # Шаг 6: Настройка переменных окружения для terr-infra
       - name: Configure Environment Variables for terr-infra
         run: |
           echo "TF_VAR_cloud_id=${{ secrets.YC_CLOUD_ID }}" >> $GITHUB_ENV
           echo "TF_VAR_folder_id=${{ secrets.YC_FOLDER_ID }}" >> $GITHUB_ENV
-          echo "TF_VAR_service_account_key_json='{\"id\": \"${{ env.ACCESS_KEY }}\", \"service_account_id\": \"<SERVICE_ACCOUNT_ID>\", \"private_key\": \"${{ env.SECRET_KEY }}\"}'" >> $GITHUB_ENV
-          echo "AWS_ACCESS_KEY_ID=${{ env.ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=${{ env.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "TF_VAR_service_account_key_json=${{ env.SERVICE_ACCOUNT_KEY_JSON }}" >> $GITHUB_ENV
 
       # Шаг 9: Terraform Init и Apply для terr-infra
       - name: Terraform Init (terr-infra)
