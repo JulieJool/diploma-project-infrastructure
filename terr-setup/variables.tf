@@ -22,4 +22,5 @@ variable "sa_name" {
 variable "sa_key_b64" {
   type        = string
   description = "SA json key base64 encoded"
+  sensitive   = true
 }
