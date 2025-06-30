@@ -19,7 +19,7 @@ variable "sa_name" {
   default     = "terr-sa"
 }
 
-variable "service_account_key_file" {
+variable "service_account_key_json" {
   description = "Yandex Cloud service account key in JSON format"
   type        = string
   sensitive   = true
