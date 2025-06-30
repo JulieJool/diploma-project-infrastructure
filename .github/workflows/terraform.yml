@@ -30,6 +30,12 @@ jobs:
         run: |
           echo "TF_VAR_cloud_id=${{ secrets.YC_CLOUD_ID }}" >> $GITHUB_ENV
           echo "TF_VAR_folder_id=${{ secrets.YC_FOLDER_ID }}" >> $GITHUB_ENV
+          
+      - name: Debug Environment Variables
+        run: |
+          echo "TF_VAR_cloud_id: ${{ env.TF_VAR_cloud_id }}"
+          echo "TF_VAR_folder_id: ${{ env.TF_VAR_folder_id }}"
+          echo "TF_VAR_service_account_key_json: ${{ env.TF_VAR_service_account_key_json }}"
 
       # Шаг 5: Terraform Init и Apply для terr-setup
       - name: Terraform Init (terr-setup)
