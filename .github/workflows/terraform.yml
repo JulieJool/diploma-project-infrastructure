@@ -57,7 +57,8 @@ jobs:
         id: extract-key
         working-directory: terr-setup
         run: |
-          echo "SERVICE_ACCOUNT_KEY_JSON=$(terraform output -raw service_account_key_json)" >> $GITHUB_ENV
+          SERVICE_ACCOUNT_KEY_JSON=$(terraform output -raw service_account_key_json | jq -c -M .)
+          echo "SERVICE_ACCOUNT_KEY_JSON=$SERVICE_ACCOUNT_KEY_JSON" >> $GITHUB_ENV
 
       # Шаг 6: Настройка переменных окружения для terr-infra
       - name: Configure Environment Variables for terr-infra
