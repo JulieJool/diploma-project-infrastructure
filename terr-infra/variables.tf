@@ -13,6 +13,12 @@ variable "default_zone" {
   default     = "ru-central1-a"
 }
 
+variable "sa_key_b64" {
+  type        = string
+  description = "SA json key base64 encoded"
+  sensitive   = true
+}
+
 variable "sa_name" {
   description = "Service account name"
   type        = string
