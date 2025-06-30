@@ -58,7 +58,8 @@ jobs:
         working-directory: terr-setup
         run: |
           RAW_OUTPUT=$(terraform output -raw service_account_key_json | grep -o '{.*}')
-          echo "SERVICE_ACCOUNT_KEY_JSON=${RAW_OUTPUT}" >> $GITHUB_ENV
+          ESCAPED_JSON=$(echo "$RAW_OUTPUT" | jq -r '@sh')
+          echo "SERVICE_ACCOUNT_KEY_JSON=${ESCAPED_JSON}" >> $GITHUB_ENV
 
       # Шаг 6: Настройка переменных окружения для terr-infra
       - name: Configure Environment Variables for terr-infra
