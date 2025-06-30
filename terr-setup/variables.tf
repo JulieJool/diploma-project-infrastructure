@@ -24,3 +24,12 @@ variable "sa_key_b64" {
   description = "SA json key base64 encoded"
   sensitive   = true
 }
+
+variable "access_key" {
+  type    = string
+  default = ""
+}
+variable "secret_key" {
+  type    = string
+  default = ""
+}
