@@ -26,8 +26,26 @@ jobs:
       # Шаг 3: Установка Yandex Cloud CLI
       - name: Install Yandex Cloud CLI
         run: |
+          # Установка Yandex Cloud CLI
           curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh  | bash
           export PATH="$HOME/yandex-cloud/bin:$PATH"
+
+          # Проверка установки: вывод версии CLI
+          echo "Checking yc version..."
+          yc --version || (echo "yc is not installed correctly" && exit 1)
+
+          # Опционально: проверка наличия новой версии CLI
+          echo "Checking for yc updates..."
+          if yc version | grep -q "new yc version"; then
+             echo "A new version of yc is available. Updating..."
+             yc components update
+          else
+             echo "yc is up to date."
+          fi
+
+          # Проверка подключения к Yandex Cloud
+          echo "Testing yc connection..."
+          yc config list || (echo "Failed to connect to Yandex Cloud. Check your configuration." && exit 1)
 
       # Шаг 4: Настройка переменных окружения (если необходимо)
       - name: Configure Environment Variables
@@ -52,8 +70,9 @@ jobs:
         id: extract-keys
         working-directory: terr-setup
         run: |
-          export ACCESS_KEY=$(terraform output -raw access_key)
-          export SECRET_KEY=$(terraform output -raw secret_key)
+          export TF_LOG=
+          ACCESS_KEY=$(terraform output -raw access_key | tr -d '\n\r')
+          SECRET_KEY=$(terraform output -raw secret_key | tr -d '\n\r')
           echo "ACCESS_KEY=$ACCESS_KEY" >> $GITHUB_ENV
           echo "SECRET_KEY=$SECRET_KEY" >> $GITHUB_ENV
 
