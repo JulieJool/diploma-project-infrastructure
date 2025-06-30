@@ -23,6 +23,12 @@ jobs:
         with:
           terraform_version: "1.8.4"
 
+      # Шаг 3: Установка Yandex Cloud CLI
+      - name: Install Yandex Cloud CLI
+        run: |
+          curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh  | bash
+          export PATH="$HOME/yandex-cloud/bin:$PATH"
+
       # Шаг 4: Настройка переменных окружения (если необходимо)
       - name: Configure Environment Variables
         run: |
