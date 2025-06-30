@@ -12,7 +12,6 @@ crash.log
 .yc/
 yc-key.json
 ~/.config/yandex-cloud/
-.json
 
 # Kubernetes
 .kube/
