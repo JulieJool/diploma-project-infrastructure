@@ -22,4 +22,5 @@ variable "sa_name" {
 variable "service_account_key_json" {
   description = "Yandex Cloud service account key in JSON format"
   type        = string
+  sensitive   = true
 }
