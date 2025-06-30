@@ -1,0 +1,30 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+terraform.tfvars
+override.tf
+crash.log
+.terraform.lock.hcl
+
+# Yandex Cloud CLI
+.yc/
+yc-key.json
+~/.config/yandex-cloud/
+.json
+
+# Kubernetes
+.kube/
+kubeconfig
+config
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# System files
+.DS_Store
+Thumbs.db
+.env
