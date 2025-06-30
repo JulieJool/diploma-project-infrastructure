@@ -40,7 +40,7 @@ jobs:
         working-directory: terr-setup
         id: terr-setup
         run: |
-          terraform apply -auto-approve
+          terraform apply -auto-approve -debug
 
 
       # Шаг 6: Получение выходных переменных из terr-setup
