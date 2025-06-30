@@ -39,7 +39,6 @@ jobs:
         run: |
           echo "TF_VAR_cloud_id=${{ secrets.YC_CLOUD_ID }}" >> $GITHUB_ENV
           echo "TF_VAR_folder_id=${{ secrets.YC_FOLDER_ID }}" >> $GITHUB_ENV
-# echo "TF_VAR_service_account_key_file=key.json" >> $GITHUB_ENV
 
       # Шаг 5: Terraform Init и Apply для terr-setup
       - name: Terraform Init (terr-setup)
@@ -52,22 +51,11 @@ jobs:
         run: |
           terraform apply -auto-approve
 
-      # Шаг 5: Получение ключа из terr-setup
-      - name: Extract Service Account Key
-        id: extract-key
-        working-directory: terr-setup
-        run: |
-          RAW_OUTPUT=$(terraform output -raw service_account_key_json | grep -o '{.*}')
-          VALID_JSON=$(echo "$RAW_OUTPUT" | jq -c -M .)
-          BASE64_JSON=$(echo "$VALID_JSON" | base64)
-          echo "SERVICE_ACCOUNT_KEY_JSON_BASE64=${BASE64_JSON}" >> $GITHUB_ENV
-
       # Шаг 6: Настройка переменных окружения для terr-infra
       - name: Configure Environment Variables for terr-infra
         run: |
           echo "TF_VAR_cloud_id=${{ secrets.YC_CLOUD_ID }}" >> $GITHUB_ENV
           echo "TF_VAR_folder_id=${{ secrets.YC_FOLDER_ID }}" >> $GITHUB_ENV
-          echo "TF_VAR_service_account_key_json=${{ env.SERVICE_ACCOUNT_KEY_JSON }}" >> $GITHUB_ENV
 
       # Шаг 9: Terraform Init и Apply для terr-infra
       - name: Terraform Init (terr-infra)
