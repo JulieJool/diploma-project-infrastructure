@@ -8,11 +8,6 @@ variable "folder_id" {
   description = "https://cloud.yandex.ru/docs/resource-manager/operations/folder/get-id"
 }
 
-variable "default_zone" {
-  type        = string
-  default     = "ru-central1-a"
-}
-
 variable "sa_name" {
   description = "Service account name"
   type        = string
