@@ -40,8 +40,7 @@ jobs:
         working-directory: terr-setup
         id: terr-setup
         run: |
-          terraform apply -auto-approve -debug
-
+          terraform apply -auto-approve
 
       # Шаг 6: Получение выходных переменных из terr-setup
       - name: Extract Access Key and Secret Key
