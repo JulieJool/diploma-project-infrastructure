@@ -38,4 +38,5 @@ locals {
 output "private_key" {
   value       = local.service_account_key.private_key
   description = "Private Key from the JSON"
+  sensitive   = true
 }
